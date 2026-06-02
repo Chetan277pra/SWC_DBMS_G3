@@ -1,0 +1,51 @@
+CREATE TABLE employee
+(
+    emp_id INT,
+    salary INT,
+    dept_id INT
+);
+
+CREATE TABLE department
+(
+    dept_id INT,
+    dept_name VARCHAR(50)
+);
+
+INSERT INTO employee
+VALUES
+(1, 70000, 101),
+(2, 50000, 101),
+(3, 60000, 101),
+(4, 65000, 102),
+(5, 65000, 102),
+(6, 55000, 102),
+(7, 60000, 103),
+(8, 70000, 103),
+(9, 80000, 103);
+
+INSERT INTO department
+VALUES
+(101, 'HR'),
+(102, 'FINANCE'),
+(103, 'MARKETING');
+
+select * from employee
+select * from department
+TRUNCATE TABLE employee
+TRUNCATE TABLE department
+
+
+SELECT E2.dept_name , E1.name , E1.dept FROM employee AS E1
+JOIN department E2 ON E1.dept_id = E2.dept_id
+WHERE E1.salary =  (
+
+SELECT MAX(E1.salary) FROM employee AS E
+WHERE E.dept_id = E1.dep_id NOT IN (
+SELECT MAX(salary) FROM employee GROUP BY dept_id 
+having dept_id = E1.dept_id
+)
+)
+
+
+
+
