@@ -1,0 +1,6 @@
+SELECT E2.dept , E1.name , E1.dept FROM TBL AS E1
+JOIN TABLB E2 ON E1.dept_id = E2.dept_id
+WHERE E1.salary =  (
+SELECT MAX(salary) FROM TBLA GROUP BY dept_id 
+having dep_id = E1.dept_id
+)
