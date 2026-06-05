@@ -1,0 +1,5 @@
+SELECT  S1.sub_id , COUNT(S2.parent_id)
+FROM Submissions S1
+LEFT JOIN Submissions S2 ON S1.sub_id = S2.parent_id
+GROUP BY S2.parent_id, S1.sub_id
+ORDER BY COUNT(S2.parent_id) DESC LIMIT 3
