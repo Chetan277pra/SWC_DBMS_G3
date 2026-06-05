@@ -1,9 +1,0 @@
-SELECT COUNT(*) AS payment_count
-FROM transactions T1
-JOIN transactions T2
-    ON T1.merchant_id = T2.merchant_id
-   AND T1.credit_card_id = T2.credit_card_id
-   AND T1.amount = T2.amount
-   AND T1.transaction_id < T2.transaction_id
-WHERE T2.transaction_timestamp - T1.transaction_timestamp
-      <= INTERVAL '10 minutes';
