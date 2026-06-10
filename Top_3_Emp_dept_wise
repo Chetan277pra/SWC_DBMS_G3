@@ -1,0 +1,38 @@
+
+CREATE TABLE Department (
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+-- DROP TABLE Department
+-- DROP TABLE Employee
+CREATE TABLE Employee (
+    Id INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Salary INT,
+    DepartmentId INT REFERENCES Department(Id)
+);
+
+INSERT INTO Department (Id, Name) VALUES 
+(1, 'IT'),
+(2, 'Sales');
+
+INSERT INTO Employee (Id, Name, Salary, DepartmentId) VALUES 
+(1, 'Joe', 85000, 1),
+(2, 'Henry', 80000, 2),
+(3, 'Sam', 60000, 2),
+(4, 'Max', 90000, 1),
+(5, 'Janet', 69000, 1),
+(6, 'Randy', 85000, 1),
+(7, 'Will', 70000, 1);
+
+
+SELECT Department , Name , Salary
+FROM (
+SELECT B.Name as Department , A.Name  , A.Salary,
+DENSE_RANK() OVER(PARTITION BY A.DepartmentId  ORDER BY A.Salary desc) AS DR
+FROM Employee A
+JOIN Department B  
+ON DepartmentId = B.Id
+) WHERE DR <= 3
+
+
